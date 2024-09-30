@@ -1,16 +1,9 @@
-// File: A1_T1_20230335.cpp
-// Purpose: .........
-// Author: Mohamed Rashed Ali
-// Section: .....................
-// ID: 20230335
-// TA: ...................
-// Date: 8 Oct 2024
-// Detailed explanation of the file and how program works
-
 #include <iostream>
 #include <vector>
 
 using namespace std;
+
+// Problem number 3
 
 string findDelimiter(const string& target)
 {
@@ -56,10 +49,11 @@ vector<string> split(const string& target)
     return result;
 }
 
-int main()
+int problem_3()
 {
+    cout<<"Please Enter anything: "<<endl;
     string word;
-    getline(cin,word);
+    getline(cin, word);  // Get the input
 
     vector<string> result = split(word);
 
@@ -76,7 +70,7 @@ int main()
         {
             // Check if character is alphanumeric
             if (isalnum(c))
-                // Add it to cleanedWord if valid
+                // Add it to newWord if valid
                 newWord += c;
         }
 
@@ -95,4 +89,23 @@ int main()
     }
 
     cout << endl;
+    return 0;
+}
+
+int main()
+{
+    cout << "Welcome User to my Assignment" << endl;
+    cout << "A)Separate by delimiter\nB)One Binary Number\nC)Many Binary Numbers\nD)Teddy Bear Picnic\nE)Phishing Scanner\nChoice: ";
+    char choice;
+    cin >> choice;
+
+
+    cin.ignore();
+
+    if (choice == 'a' || choice == 'A')
+    {
+        problem_3();
+    }
+
+    return 0;  // Add a return in main as well
 }
