@@ -1,0 +1,3 @@
+C:/Users/moham/Downloads/Small-College-Projects/Small-College-Projects/A1_T1_20230335/cmake-build-debug/CMakeFiles/A1_T1_20230335.dir
+C:/Users/moham/Downloads/Small-College-Projects/Small-College-Projects/A1_T1_20230335/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/moham/Downloads/Small-College-Projects/Small-College-Projects/A1_T1_20230335/cmake-build-debug/CMakeFiles/rebuild_cache.dir
