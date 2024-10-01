@@ -92,20 +92,65 @@ int problem_3()
     return 0;
 }
 
+
+
+// Problem 6a
+
+class Binary{
+public:
+    static void binaryPrint(int n)
+    {
+        // Base case: If n is 0, print 0
+        if (n == 0)
+        {
+            cout << 0;
+            return;
+        }
+
+        // If n > 1, recursively call binaryPrint with n / 2
+        if (n > 1)
+            binaryPrint(n / 2);
+
+        // Print the current bit (n % 2)
+        cout << (n % 2);
+    }
+};
+
+int problem_6a()
+{
+    cout<<"Please enter the number you want"<<endl;
+    int num; cin>>num;
+    Binary::binaryPrint(num);
+    return 0;
+}
+
+// problem 6b
+
+
+
+
+
+
 int main()
 {
     cout << "Welcome User to my Assignment" << endl;
     cout << "A)Separate by delimiter\nB)One Binary Number\nC)Many Binary Numbers\nD)Teddy Bear Picnic\nE)Phishing Scanner\nChoice: ";
     char choice;
-    cin >> choice;
-
+    cin>>choice;
 
     cin.ignore();
-
-    if (choice == 'a' || choice == 'A')
+    while (choice !='a' and choice != 'A' and choice != 'b' and choice != 'B' and choice != 'c' and choice != 'C' and choice != 'd' and choice != 'D' and choice != 'e' and choice != 'E')
     {
-        problem_3();
+        cout<<"Please chose from one of the options available"<<endl;
+        cout << "A)Separate by delimiter\nB)One Binary Number\nC)Many Binary Numbers\nD)Teddy Bear Picnic\nE)Phishing Scanner\nChoice: ";
+        cin >> choice;
+        cin.ignore();
     }
+    if (choice == 'a' || choice == 'A')
+        problem_3();
+    else if(choice == 'b' || choice == 'B')
+        problem_6a();
 
-    return 0;  // Add a return in main as well
+
+    return 0;
 }
