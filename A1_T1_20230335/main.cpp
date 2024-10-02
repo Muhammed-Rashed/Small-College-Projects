@@ -95,40 +95,59 @@ int problem_3()
 
 
 // Problem 6a
-
-class Binary{
-public:
-    static void binaryPrint(int n)
+static void binaryPrint(int n)
+{
+    // Base case: If n is 0, print 0
+    if (n == 0)
     {
-        // Base case: If n is 0, print 0
-        if (n == 0)
-        {
-            cout << 0;
-            return;
-        }
-
-        // If n > 1, recursively call binaryPrint with n / 2
-        if (n > 1)
-            binaryPrint(n / 2);
-
-        // Print the current bit (n % 2)
-        cout << (n % 2);
+        cout << 0;
+        return;
     }
-};
+
+    // If n > 1, recursively call binaryPrint with n / 2
+    if (n > 1)
+        binaryPrint(n / 2);
+
+    // Print the current bit (n % 2)
+    cout << (n % 2);
+}
 
 int problem_6a()
 {
     cout<<"Please enter the number you want"<<endl;
     int num; cin>>num;
-    Binary::binaryPrint(num);
+    binaryPrint(num);
     return 0;
 }
 
 // problem 6b
+void numbers(string prefix, int k)
+{
+    if (k == 0)
+        cout << prefix << endl;
 
+    else
+    {
 
+        numbers(prefix + "0", k - 1);
+        numbers(prefix + "1", k - 1);
+    }
+}
 
+int problem_6b()
+{
+    int k;
+    string prefix;
 
+    cout << "Please enter the binary number prefix: ";
+    cin >> prefix;
+
+    cout << "Please enter the number of digits for the suffix: ";
+    cin >> k;
+
+    numbers(prefix, k);
+    return 0;
+}
 
 
 int main()
@@ -150,6 +169,8 @@ int main()
         problem_3();
     else if(choice == 'b' || choice == 'B')
         problem_6a();
+    else if(choice == 'c' || choice == 'C')
+        problem_6b();
 
 
     return 0;
