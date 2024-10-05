@@ -1,9 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <algorithm>
 
 using namespace std;
 
 // Problem 3
+
+// Function to help find the delimiter by checking if it's not a number nor a word
 string findDelimiter(const string& target)
 {
     for (char c : target)
@@ -14,6 +18,7 @@ string findDelimiter(const string& target)
     return "";
 }
 
+// Function to help split the words
 vector<string> split(const string& target)
 {
     string delimiter = findDelimiter(target);
@@ -39,6 +44,7 @@ vector<string> split(const string& target)
     return result;
 }
 
+// Final code for problem 3
 int problem_3()
 {
     cout<<"Please Enter anything: "<<endl;
@@ -47,8 +53,10 @@ int problem_3()
 
     vector<string> result = split(word);
 
+    // This is here just to make sure that the comma used is printed correctly
     bool first = true;
 
+    // The loop used to print the output
     for (auto& part : result)
     {
         string newWord = "";
@@ -78,20 +86,25 @@ int problem_3()
 
 
 // Problem 6a
+
+// Function to find binary (IDK why you made us do this it was super easy, but I guess good practice)
 static void binaryPrint(int n)
 {
+    // The test case as told in the pdf
     if (n == 0)
     {
         cout << 0;
         return;
     }
 
+    // The recursion part
     if (n > 1)
         binaryPrint(n / 2);
 
     cout << (n % 2);
 }
 
+// Where you do the inputs
 int problem_6a()
 {
     cout<<"Please enter the number you want"<<endl;
@@ -101,6 +114,8 @@ int problem_6a()
 }
 
 // problem 6b
+
+// Function for getting the all the different binary cases
 void numbers(string prefix, int k)
 {
     if (k == 0)
@@ -113,6 +128,7 @@ void numbers(string prefix, int k)
     }
 }
 
+// Do i have to tell you what is this for again? It's for the inputs
 int problem_6b()
 {
     int k;
@@ -130,18 +146,25 @@ int problem_6b()
 
 
 // Problem 9
+
+// It's nice that the Professor made us use dynamic programing although this is a very simple one
+
+// The function used for calculating the bears and checking
 static bool bears(int n)
 {
+    // Check if its 42
     if (n == 42)
         return true;
 
+    // Check if it's less than 42
     if (n < 42)
         return false;
 
+    // Checking while at the same time using the first rule
     if (n % 2 == 0 && bears(n / 2))
         return true;
 
-
+    // Checking while at the same time using the 2nd rule
     if (n % 3 == 0 || n % 4 == 0)
     {
         int lastDigit = n % 10;
@@ -152,13 +175,17 @@ static bool bears(int n)
             return true;
     }
 
+    // Same like the above if conditions
     if (n % 5 == 0 && bears(n - 42))
         return true;
 
+
+    // If none of these work then simply false
     return false;
 
 }
 
+// No need to explain why this is here do i? inputs and outputs
 int problem_9()
 {
     int n;
@@ -173,6 +200,131 @@ int problem_9()
 }
 
 
+// problem 12 (He just had to make us suffer now did he?)
+
+// Function to convert a string to lowercase
+// (Because some files will have capital letters that the code wouldn't be able to read)
+string toLowerCase(const string& str)
+{
+    string result = str;
+    transform(result.begin(), result.end(), result.begin(), ::tolower);
+    return result;
+}
+
+// Structure to hold the term and its associated point value
+struct PhishingTerm {
+    string term;
+    int pointValue;
+};
+
+// Function to scan the file for phishing terms and calculate the phishing score (Most of the work)
+void scanFile(const string& fileName, const vector<PhishingTerm>& terms)
+{
+    ifstream file(fileName);
+
+    // Simple error message
+    if (!file.is_open())
+    {
+        cerr << "Could not open the file: " << fileName << endl;
+        return;
+    }
+
+    // Array to hold the occurrence count of each phishing term
+    vector<int> occurrences(terms.size(), 0);
+    int totalScore = 0;
+
+    string line;
+    while (getline(file, line))
+    {
+        // Convert the line to lowercase
+        string lowerLine = toLowerCase(line);
+
+        for (size_t i = 0; i < terms.size(); ++i)
+        {
+            size_t pos = lowerLine.find(terms[i].term);
+            while (pos != string::npos) {
+                occurrences[i]++;
+                totalScore += terms[i].pointValue;
+                pos = lowerLine.find(terms[i].term, pos + terms[i].term.size());
+            }
+        }
+    }
+
+    file.close();
+
+    // Output the results
+    cout << "Phishing Scan Results:\n";
+    for (size_t i = 0; i < terms.size(); ++i)
+    {
+        if (occurrences[i] > 0)
+        {
+            cout << "Term: " << terms[i].term << ", Occurrences: " << occurrences[i]
+                 << ", Points: " << occurrences[i] * terms[i].pointValue << endl;
+        }
+    }
+    cout << "Total Phishing Score: " << totalScore << endl;
+}
+
+// This one is slightly different with the list inside since no need to put in a function of its own
+int problem_12()
+{
+    // List of common phishing terms and their point values
+    vector<PhishingTerm> phishingTerms = {
+
+            // Words used a lot of the time
+
+            {"password", 3},
+            {"credit card", 3},
+            {"social security", 3},
+            {"account", 2},
+            {"bank", 3},
+            {"security", 2},
+            {"virus", 2},
+
+            // Action
+
+            {"verify", 2},
+            {"login", 2},
+            {"urgent", 3},
+            {"click here", 2},
+            {"secure", 1},
+            {"update", 2},
+
+            // Urgency
+
+            {"limited time", 2},
+            {"offer", 1},
+            {"action required", 2},
+            {"immediately", 2},
+            {"confidential", 3},
+            {"billing", 3},
+            {"alert", 2},
+            {"dear customer", 1},
+            {"congratulations", 1},
+
+            // Company names
+
+            {"paypal", 3},
+            {"ebay", 2},
+            {"amazon", 2},
+            {"apple", 2},
+            {"microsoft", 2},
+            {"chase", 3},
+            {"huawei", 3},
+            {"citibank", 3},
+    };
+
+    string fileName;
+    cout << "Enter the name of the file to scan: ";
+    cin >> fileName;
+
+    scanFile(fileName, phishingTerms);
+
+    return 0;
+}
+
+
+// The main menu
 int main()
 {
     cout << "Welcome User to my Assignment" << endl;
@@ -196,6 +348,10 @@ int main()
         problem_6b();
     else if (choice == 'd' || choice == 'D')
         problem_9();
+    else if (choice == 'e' || choice == 'E')
+        problem_12();
+
+
 
 
     return 0;
