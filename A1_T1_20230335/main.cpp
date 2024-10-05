@@ -128,14 +128,36 @@ void numbers(string prefix, int k)
     }
 }
 
-// Do i have to tell you what is this for again? It's for the inputs
+// Do I have to tell you what is this for again? It's for the inputs
 int problem_6b()
 {
     int k;
     string prefix;
+    bool isValid;
 
-    cout << "Please enter the binary number prefix: ";
-    cin >> prefix;
+    // Input validation loop for the binary number prefix
+    do{
+        cout << "Please enter the binary number prefix: ";
+        cin >> prefix;
+
+        isValid = true;
+
+        // Check each character in the input string
+        for (char c : prefix)
+        {
+            if (c != '0' && c != '1')
+            {
+                // Set to false if an invalid character is found
+                isValid = false;
+                cout << "Invalid input. Only 0 and 1 are allowed." << endl;
+
+                // Exit the loop early since we found an invalid character
+                break;
+
+            }
+        }
+
+    } while (!isValid);
 
     cout << "Please enter the number of digits for the suffix: ";
     cin >> k;
@@ -182,7 +204,6 @@ static bool bears(int n)
 
     // If none of these work then simply false
     return false;
-
 }
 
 // No need to explain why this is here do i? inputs and outputs
@@ -333,6 +354,8 @@ int main()
     cin>>choice;
 
     cin.ignore();
+
+    // Loop to make sure nothing wrong happens
     while (choice !='a' and choice != 'A' and choice != 'b' and choice != 'B' and choice != 'c' and choice != 'C' and choice != 'd' and choice != 'D' and choice != 'e' and choice != 'E')
     {
         cout<<"Please chose from one of the options available"<<endl;
@@ -350,9 +373,6 @@ int main()
         problem_9();
     else if (choice == 'e' || choice == 'E')
         problem_12();
-
-
-
 
     return 0;
 }
