@@ -13,11 +13,57 @@
 #include <fstream>
 #include <algorithm>
 
+// Colors
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define GREEN   "\033[32m"
+#define MAGENTA "\033[35m"
+
 using namespace std;
+
+// This function will act as my main way of entering and exiting after and doing a task
+int Pause()
+{
+    cout << "Do You wish to Continue, Return to the menu or Exit?" << endl;
+    cout << BLUE << "A) Continue\n" << RESET;
+    cout << MAGENTA << "B) Return to the menu\n" << RESET;
+    cout << RED << "C) Exit\n" << RESET;
+    cout << YELLOW << "Choice: " << RESET;
+
+    string choice;
+    cin >> choice;
+    cin.ignore();
+
+    // Input validation loop
+    while (choice.length() != 1 ||
+           (choice[0] != 'a' && choice[0] != 'A' &&
+            choice[0] != 'b' && choice[0] != 'B' &&
+            choice[0] != 'c' && choice[0] != 'C')) {
+        cout << endl << RED << "Please choose from one of the options available" << RESET << endl;
+
+        cout << BLUE << "A) Continue\n" << RESET;
+        cout << MAGENTA << "B) Return to the menu\n" << RESET;
+        cout << RED << "C) Exit\n" << RESET;
+        cout << YELLOW << "Choice: " << RESET;
+
+        cin >> choice;
+        cin.ignore();
+    }
+
+    if (choice[0] == 'a' || choice[0] == 'A')
+        return 0;
+    else if (choice[0] == 'b' || choice[0] == 'B')
+        return 2;
+    else
+        return 3;
+}
+
 // These are all the functions used for validating and error handling
 
+// Used in problem 6a and 9
 // This small function will be used in error handling by checking if what we entered is an int (It was a nice trick I learned)
-    // Used in problem 6a and 9
         int validINT()
         {
             int num;
@@ -26,7 +72,7 @@ using namespace std;
                 cin >> num;
                 if (cin.fail())
                 {
-                    cout << "Invalid input. Please enter a valid integer: ";
+                    cout << RED << "Invalid input. Please enter a valid integer: " << RESET;
                     cin.clear();
                     cin.ignore(1000, '\n');
                 }
@@ -38,8 +84,9 @@ using namespace std;
             }
         }
 
+
+// Used for problem 6b
 // To check if the string we entered is binary or not
-    // Used for problem 6b
         bool isBinary(const string& prefix)
         {
             for (char c : prefix)
@@ -50,10 +97,12 @@ using namespace std;
             return true;
         }
 
+
+
 // This will have all the functions used for each problem
 
+// Used for problem 3
 // Function to help find the delimiter by checking if it's not a number nor a word
-    // Used for problem 3
         string findDelimiter(const string& target)
         {
             for (char c : target)
@@ -91,8 +140,8 @@ using namespace std;
         }
 
 
+// Used for problem 6a
 // Function to find binary (IDK why you made us do this it was super easy, but I guess good practice)
-    // Used for problem 6a
         static void binaryPrint(int n)
         {
             // The test case as told in the pdf
@@ -110,9 +159,8 @@ using namespace std;
         }
 
 
-
+// Used for problem 6b
 // Function for getting the all the different binary cases
-    // Used for problem 6b
         void numbers(string prefix, int k)
         {
             if (k == 0)
@@ -126,9 +174,9 @@ using namespace std;
         }
 
 
+// Used for problem 9
 // It's nice that the Professor made us use dynamic programing although this is a very simple one
 // The function used for calculating the bears and checking
-    // Used for problem 9
         static bool bears(int n)
         {
             // Check if its 42
@@ -188,7 +236,7 @@ using namespace std;
             // Simple error message
             if (!file.is_open())
             {
-                cerr << "Could not open the file: " << fileName << endl;
+                cout << RED << "Could not open the file: "<< RESET << GREEN << fileName << RESET << endl;
                 return;
             }
 
@@ -232,7 +280,7 @@ using namespace std;
 // These functions will be used for our inputs and outputs
 int problem_3()
 {
-    cout<<"Please Enter anything: "<<endl;
+    cout << GREEN <<"Please Enter anything: " << RESET <<endl;
     string word;
     getline(cin, word);
 
@@ -246,7 +294,6 @@ int problem_3()
     {
         string newWord = "";
 
-
         for (char c : part)
         {
             if (isalnum(c))
@@ -256,9 +303,9 @@ int problem_3()
         if (!newWord.empty())
         {
             if (!first)
-                cout << ",";
+                cout << GREEN << "," << RESET;
 
-            cout << "\"" << newWord << "\"";
+            cout << GREEN << "\"" << newWord << "\"" << RESET;
 
             first = false;
         }
@@ -270,7 +317,7 @@ int problem_3()
 
 int problem_6a()
 {
-    cout<<"Please enter the number you want"<<endl;
+    cout<< GREEN <<"Please enter the number you want: " << RESET << endl;
     int num = validINT();
     binaryPrint(num);
     return 0;
@@ -284,17 +331,17 @@ int problem_6b()
 
     do
     {
-        cout << "Please enter the binary number prefix: ";
+        cout << GREEN << "Please enter the binary number prefix: " << RESET;
         cin >> prefix;
 
         isValid = isBinary(prefix);
 
         if (!isValid)
-            cout << "Invalid input. Only 0 and 1 are allowed." << endl;
+            cout << RED << "Invalid input. Only 0 and 1 are allowed." << RESET << endl;
 
     } while (!isValid);
 
-    cout << "Please enter the number of digits for the suffix: ";
+    cout << GREEN << "Please enter the number of digits for the suffix: " << RESET;
     cin >> k;
 
     numbers(prefix, k);
@@ -303,11 +350,11 @@ int problem_6b()
 
 int problem_9()
 {
-    cout<<"Please enter the number of bears: ";
+    cout << GREEN << "Please enter the number of bears: " << RESET;
     int n = validINT();
 
     if (bears(n))
-        cout<<"Bears("<<n<<") is true"<<endl;
+        cout<<GREEN<<"Bears("<<n<<") is true"<<RESET<<endl;
     else
         cout<<"Bears("<<n<<") is false"<<endl;
     return 0;
@@ -363,7 +410,7 @@ int problem_12()
     };
 
     string fileName;
-    cout << "Enter the name of the file to scan: ";
+    cout << GREEN <<"Enter the name of the file to scan: " << RESET;
     cin >> fileName;
 
     scanFile(fileName, phishingTerms);
@@ -375,31 +422,97 @@ int problem_12()
 // The main menu
 int main()
 {
-    cout << "Welcome User to my Assignment" << endl;
-    cout << "A)Separate by delimiter\nB)One Binary Number\nC)Many Binary Numbers\nD)Teddy Bear Picnic\nE)Phishing Scanner\nChoice: ";
-    char choice;
-    cin>>choice;
+    cout << GREEN << "Welcome User to my Assignment" << RESET << endl;
 
-    cin.ignore();
+    bool running = true;
+    int lastChoice = -1;
 
-    // Loop to make sure nothing wrong happens
-    while (choice !='a' and choice != 'A' and choice != 'b' and choice != 'B' and choice != 'c' and choice != 'C' and choice != 'd' and choice != 'D' and choice != 'e' and choice != 'E')
-    {
-        cout<<"Please chose from one of the options available"<<endl;
-        cout << "A)Separate by delimiter\nB)One Binary Number\nC)Many Binary Numbers\nD)Teddy Bear Picnic\nE)Phishing Scanner\nChoice: ";
-        cin >> choice;
-        cin.ignore();
+    while (running) {
+        if (lastChoice == -1)
+        {
+            // If it's the first run, show the menu
+            cout << BLUE << "A) Separate by delimiter\n" << RESET;
+            cout << BLUE << "B) One Binary Number\n" << RESET;
+            cout << BLUE << "C) Many Binary Numbers\n" << RESET;
+            cout << BLUE << "D) Teddy Bear Picnic\n" << RESET;
+            cout << BLUE << "E) Phishing Scanner\n" << RESET;
+            cout << YELLOW << "Choice: " << RESET;
+
+            string choice;
+            cin >> choice;
+            cin.ignore();
+
+            // For Error handling
+            while (choice.length() != 1 ||
+                   (choice[0] != 'a' && choice[0] != 'A' &&
+                    choice[0] != 'b' && choice[0] != 'B' &&
+                    choice[0] != 'c' && choice[0] != 'C' &&
+                    choice[0] != 'd' && choice[0] != 'D' &&
+                    choice[0] != 'e' && choice[0] != 'E')) {
+                cout << endl << RED << "Please choose from one of the options available" << RESET << endl;
+
+                cout << BLUE << "A) Separate by delimiter\n" << RESET;
+                cout << BLUE << "B) One Binary Number\n" << RESET;
+                cout << BLUE << "C) Many Binary Numbers\n" << RESET;
+                cout << BLUE << "D) Teddy Bear Picnic\n" << RESET;
+                cout << BLUE << "E) Phishing Scanner\n" << RESET;
+                cout << YELLOW << "Choice: " << RESET;
+
+                cin >> choice;
+                cin.ignore();
+            }
+
+            // Store the last operation based on user choice
+            if (choice[0] == 'a' || choice[0] == 'A')
+            {
+                lastChoice = 1;
+                problem_3();
+            }
+            else if (choice[0] == 'b' || choice[0] == 'B')
+            {
+                lastChoice = 2;
+                problem_6a();
+            }
+            else if (choice[0] == 'c' || choice[0] == 'C')
+            {
+                lastChoice = 3;
+                problem_6b();
+            }
+            else if (choice[0] == 'd' || choice[0] == 'D')
+            {
+                lastChoice = 4;
+                problem_9();
+            }
+            else if (choice[0] == 'e' || choice[0] == 'E')
+            {
+                lastChoice = 5;
+                problem_12();
+            }
+        }
+        else
+        {
+            // If a last choice exists, pause and retry the operation
+            int action = Pause();
+            if (action == 0)
+            {
+                switch (lastChoice)
+                {
+                    case 1: problem_3(); break;
+                    case 2: problem_6a(); break;
+                    case 3: problem_6b(); break;
+                    case 4: problem_9(); break;
+                    case 5: problem_12(); break;
+                }
+            }
+            else if (action == 2)
+            {
+                lastChoice = -1;
+                continue;
+            }
+            else if (action == 3)
+                running = false;
+        }
     }
-    if (choice == 'a' || choice == 'A')
-        problem_3();
-    else if(choice == 'b' || choice == 'B')
-        problem_6a();
-    else if(choice == 'c' || choice == 'C')
-        problem_6b();
-    else if (choice == 'd' || choice == 'D')
-        problem_9();
-    else if (choice == 'e' || choice == 'E')
-        problem_12();
 
     return 0;
 }

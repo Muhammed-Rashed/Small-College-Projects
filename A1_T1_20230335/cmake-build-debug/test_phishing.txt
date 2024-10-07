@@ -1,0 +1,48 @@
+
+Dear User,
+
+We are contacting you regarding a security update to your account. Please verify your information by logging in to your account. Failure to do so may result in account suspension. 
+
+Your password: myPassword123
+Your social security number: 123-45-6789
+Please click here to verify your identity.
+
+Urgent Action Required: Your credit card information is at risk. Please follow this link to secure your account. 
+
+If you do not respond within the next 24 hours, your account will be locked. 
+
+Sincerely,
+Your Bank
+
+---
+
+Important Notice from PayPal:
+
+Dear Customer,
+
+We noticed unusual activity in your PayPal account. Please log in to verify your identity. 
+
+Click here to resolve this issue. If you do not take action immediately, your account will be restricted.
+
+Best,
+PayPal Support
+
+---
+
+You have won a limited time offer! Click here to claim your prize now. 
+
+Remember to provide your banking information to complete the process.
+
+This message is confidential. Do not share your login details with anyone. 
+
+For more information, visit our website at www.phishing-example.com or call us at 1-800-555-0199.
+
+---
+
+Beware of phishing scams:
+- Verify emails that request personal information.
+- Do not click on links from unknown sources.
+- Use secure websites for transactions.
+
+Thank you,
+The Cyber Safety Team
