@@ -1,5 +1,5 @@
 // File: A1_T1_20230335.cpp
-// Purpose: ………
+// Purpose: Split words, find binary numbers, find all possible binary numbers, find if numbers of bears equals 42, find if file is a phishing email
 // Author: Mohamed Rashed Ali
 // Section: Yet to be determined
 // ID: 20230335
@@ -102,42 +102,25 @@ int Pause()
 // This will have all the functions used for each problem
 
 // Used for problem 3
-// Function to help find the delimiter by checking if it's not a number nor a word
-        string findDelimiter(const string& target)
-        {
-            for (char c : target)
-            {
-                if (!isalnum(c))
-                    return string(1, c);
-            }
-            return "";
-        }
-
 // Function to help split the words
-        vector<string> split(const string& target)
-        {
-            string delimiter = findDelimiter(target);
+vector<string> split(const string& target, const string& delimiter)
+{
+    vector<string> result;
+    size_t start = 0;
+    size_t end = target.find(delimiter);
 
-            if (delimiter.empty())
-                return { target };
+    while (end != string::npos)
+    {
+        result.push_back(target.substr(start, end - start));
+        start = end + delimiter.length();
+        end = target.find(delimiter, start);
+    }
 
-            vector<string> result;
-            int start = 0;
-            int end = target.find(delimiter);
+    // Add the last substring after the last delimiter
+    result.push_back(target.substr(start));
 
-            while (end != -1)
-            {
-                result.push_back(target.substr(start, end - start));
-
-                start = end + delimiter.length();
-
-                end = target.find(delimiter, start);
-            }
-
-            result.push_back(target.substr(start));
-
-            return result;
-        }
+    return result;
+}
 
 
 // Used for problem 6a
@@ -280,38 +263,31 @@ int Pause()
 // These functions will be used for our inputs and outputs
 int problem_3()
 {
-    cout << GREEN <<"Please Enter anything: " << RESET <<endl;
-    string word;
-    getline(cin, word);
+    string input, delimiter;
 
-    vector<string> result = split(word);
+    cout << GREEN <<"Enter a string: " << RESET;
+    getline(cin, input);
 
-    // This is here just to make sure that the comma used is printed correctly
-    bool first = true;
-
-    // The loop used to print the output
-    for (auto& part : result)
+    cout << GREEN <<"Enter a delimiter: " << RESET;
+    getline(cin, delimiter);
+    while (delimiter.length()>1)
     {
-        string newWord = "";
-
-        for (char c : part)
-        {
-            if (isalnum(c))
-                newWord += c;
-        }
-
-        if (!newWord.empty())
-        {
-            if (!first)
-                cout << GREEN << "," << RESET;
-
-            cout << GREEN << "\"" << newWord << "\"" << RESET;
-
-            first = false;
-        }
+        cout << RED << "Please enter one character: "<< RESET;
+        getline(cin, delimiter);
+        cin.ignore();
     }
 
+    vector<string> result = split(input, delimiter);
+
+    cout << "Resulting split strings: ";
+    for (size_t i = 0; i < result.size(); ++i)
+    {
+        cout << "\"" << result[i] << "\"";
+        if (i < result.size() - 1)
+            cout << ", ";
+    }
     cout << endl;
+
     return 0;
 }
 
@@ -345,6 +321,7 @@ int problem_6b()
     cin >> k;
 
     numbers(prefix, k);
+    cout<<endl;
     return 0;
 }
 
@@ -356,7 +333,7 @@ int problem_9()
     if (bears(n))
         cout<<GREEN<<"Bears("<<n<<") is true"<<RESET<<endl;
     else
-        cout<<"Bears("<<n<<") is false"<<endl;
+        cout<<GREEN<<"Bears("<<n<<") is false"<<RESET<<endl;
     return 0;
 }
 
