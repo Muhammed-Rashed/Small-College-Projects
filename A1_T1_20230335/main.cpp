@@ -103,24 +103,23 @@ int Pause()
 
 // Used for problem 3
 // Function to help split the words
-vector<string> split(const string& target, const string& delimiter)
-{
-    vector<string> result;
-    size_t start = 0;
-    size_t end = target.find(delimiter);
+        vector<string> split(const string& target, const string& delimiter)
+        {
+            vector<string> result;
+            int start = 0;
+            int end = target.find(delimiter);
 
-    while (end != string::npos)
-    {
-        result.push_back(target.substr(start, end - start));
-        start = end + delimiter.length();
-        end = target.find(delimiter, start);
-    }
+            while (end != string::npos) {
+                result.push_back(target.substr(start, end - start));
+                start = end + delimiter.length();
+                end = target.find(delimiter, start);
+            }
 
-    // Add the last substring after the last delimiter
-    result.push_back(target.substr(start));
+            // Add the last substring after the last delimiter
+            result.push_back(target.substr(start));
 
-    return result;
-}
+            return result;
+        }
 
 
 // Used for problem 6a
@@ -217,7 +216,7 @@ vector<string> split(const string& target, const string& delimiter)
             ifstream file(fileName);
 
             // Simple error message
-            if (!file.is_open())
+            while (!file.is_open())
             {
                 cout << RED << "Could not open the file: "<< RESET << GREEN << fileName << RESET << endl;
                 return;
@@ -296,12 +295,12 @@ int problem_6a()
     cout<< GREEN <<"Please enter the number you want: " << RESET << endl;
     int num = validINT();
     binaryPrint(num);
+    cout<<endl;
     return 0;
 }
 
 int problem_6b()
 {
-    int k;
     string prefix;
     bool isValid;
 
@@ -318,7 +317,7 @@ int problem_6b()
     } while (!isValid);
 
     cout << GREEN << "Please enter the number of digits for the suffix: " << RESET;
-    cin >> k;
+    int k = validINT();
 
     numbers(prefix, k);
     cout<<endl;
@@ -402,12 +401,13 @@ int main()
     cout << GREEN << "Welcome User to my Assignment" << RESET << endl;
 
     bool running = true;
+
+    // To store the last choice made
     int lastChoice = -1;
 
     while (running) {
         if (lastChoice == -1)
         {
-            // If it's the first run, show the menu
             cout << BLUE << "A) Separate by delimiter\n" << RESET;
             cout << BLUE << "B) One Binary Number\n" << RESET;
             cout << BLUE << "C) Many Binary Numbers\n" << RESET;
