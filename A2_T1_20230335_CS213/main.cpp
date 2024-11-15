@@ -1,157 +1,139 @@
-#include "StringSet.h"
 #include <iostream>
-
+#include "StringSet.h"
 using namespace std;
 
 void displayMenu() {
-    cout << "\n=== StringSet Demo Application ===\n";
-    cout << "1. Load two files and calculate similarity\n";
-    cout << "2. Enter two strings and calculate similarity\n";
-    cout << "3. Demo: Preloaded files\n";
-    cout << "4. Exit\n";
-    cout << "===================================\n";
-    cout << "Enter your choice: ";
+    cout << "\nMenu Options:" << endl;
+    cout << "1. Load documents from files" << endl;
+    cout << "2. Load documents from strings" << endl;
+    cout << "3. Display similarity between two documents" << endl;
+    cout << "4. Add a word to a document" << endl;
+    cout << "5. Remove a word from a document" << endl;
+    cout << "6. Display union of two documents" << endl;
+    cout << "7. Display intersection of two documents" << endl;
+    cout << "8. Exit" << endl;
+    cout << "Please choose an option: ";
 }
 
-void demoOption() {
-    // Predefined sample documents
-    string demo1 = "Chocolate ice cream, chocolate milk, and chocolate bars are delicious! "
-                   "Everyone loves chocolate. Ice cream is also a favorite treat. "
-                   "Milk and bars are essential ingredients in many desserts. "
-                   "Bars, ice, and milk are often enjoyed with chocolate.";
+void loadDocumentFromFile(StringSet& doc1, StringSet& doc2, const string& filename1, const string& filename2) {
+    try {
+        doc1 = StringSet(filename1); // Load the first document from a file
+        cout << "Document 1 loaded from file: " << filename1 << endl;
+        cout << "Document 1 words: ";
+        doc1.display(); // Display loaded words for doc1
 
-    string demo2 = "Chocolate cake is a classic dessert enjoyed worldwide. "
-                   "Ice cream and milkshakes pair wonderfully with chocolate bars. "
-                   "Everyone has a favorite dessert, often including chocolate or ice cream.";
-
-    // Create StringSet objects for the demo documents
-    StringSet doc1(demo1, true);
-    StringSet doc2(demo2, true);
-
-    // Display documents
-    cout << "Demo Document 1: " << endl;
-    doc1.display();
-    cout << "\nDemo Document 2: " << endl;
-    doc2.display();
-
-    // Calculate union, intersection, and similarity
-    StringSet unionSet = doc1 + doc2;
-    StringSet intersectionSet = doc1 * doc2;
-    double similarityScore = doc1.similarity(doc2);
-
-    // Display results
-    cout << "\nUnion of words:" << endl;
-    unionSet.display();
-
-    cout << "\nIntersection of words:" << endl;
-    intersectionSet.display();
-
-    cout << "\nSimilarity score: " << similarityScore << endl;
+        doc2 = StringSet(filename2); // Load the second document from a file
+        cout << "Document 2 loaded from file: " << filename2 << endl;
+        cout << "Document 2 words: ";
+        doc2.display(); // Display loaded words for doc2
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << endl;
+    }
 }
 
-void loadFiles() {
-    string filename1, filename2;
-    cout << "Enter the path to the first file: ";
-    cin >> filename1;
-    cout << "Enter the path to the second file: ";
-    cin >> filename2;
+void loadDocumentFromString(StringSet& doc1, StringSet& doc2, const string& str1, const string& str2) {
+    try {
+        doc1 = StringSet(str1, true); // Load the first string into doc1
+        cout << "Document 1 loaded from string." << endl;
+        cout << "Document 1 words: ";
+        doc1.display(); // Display loaded words for doc1
 
-    StringSet doc1(filename1);
-    StringSet doc2(filename2);
-
-    cout << "\nUnique words in the first document:\n";
-    doc1.display();
-    cout << "\nUnique words in the second document:\n";
-    doc2.display();
-
-    StringSet unionSet = doc1 + doc2;
-    StringSet intersectionSet = doc1 * doc2;
-
-    cout << "\nUnion of the two documents:\n";
-    unionSet.display();
-
-    cout << "Intersection of the two documents:\n";
-    intersectionSet.display();
-
-    double similarityScore = doc1.similarity(doc2);
-    cout << "\nSimilarity Score: " << similarityScore << endl;
+        doc2 = StringSet(str2, true); // Load the second string into doc2
+        cout << "Document 2 loaded from string." << endl;
+        cout << "Document 2 words: ";
+        doc2.display(); // Display loaded words for doc2
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << endl;
+    }
 }
 
-void enterStrings() {
-    cin.ignore(); // Clear the input buffer
-    string str1, str2;
-    cout << "Enter the first string: ";
-    getline(cin, str1);
-    cout << "Enter the second string: ";
-    getline(cin, str2);
-
-    StringSet doc1(str1, true);
-    StringSet doc2(str2, true);
-
-    cout << "\nUnique words in the first string:\n";
-    doc1.display();
-    cout << "\nUnique words in the second string:\n";
-    doc2.display();
-
-    StringSet unionSet = doc1 + doc2;
-    StringSet intersectionSet = doc1 * doc2;
-
-    cout << "\nUnion of the two strings:\n";
-    unionSet.display();
-
-    cout << "Intersection of the two strings:\n";
-    intersectionSet.display();
-
-    double similarityScore = doc1.similarity(doc2);
-    cout << "\nSimilarity Score: " << similarityScore << endl;
+void showSimilarity(const StringSet& doc1, const StringSet& doc2) {
+    try {
+        double similarityScore = doc1.similarity(doc2);
+        cout << "Similarity Score: " << similarityScore << endl;
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << endl;
+    }
 }
 
-void demoMode() {
-    cout << "\n--- Demo Mode ---\n";
-    StringSet doc1("demo_file1.txt"); // Preloaded file paths
-    StringSet doc2("demo_file2.txt");
-
-    cout << "Unique words in the first demo document:\n";
-    doc1.display();
-    cout << "Unique words in the second demo document:\n";
-    doc2.display();
-
-    StringSet unionSet = doc1 + doc2;
-    StringSet intersectionSet = doc1 * doc2;
-
-    cout << "\nUnion of the two demo documents:\n";
+void showUnion(const StringSet& doc1, const StringSet& doc2) {
+    StringSet unionSet = doc1 + doc2; // Get the union using the overloaded "+" operator
+    cout << "Union of Document 1 and Document 2: ";
     unionSet.display();
+}
 
-    cout << "Intersection of the two demo documents:\n";
+void showIntersection(const StringSet& doc1, const StringSet& doc2) {
+    StringSet intersectionSet = doc1 * doc2; // Get the intersection using the overloaded "*" operator
+    cout << "Intersection of Document 1 and Document 2: ";
     intersectionSet.display();
-
-    double similarityScore = doc1.similarity(doc2);
-    cout << "\nSimilarity Score: " << similarityScore << endl;
 }
 
 int main() {
+    StringSet doc1, doc2;
     int choice;
-    do {
+
+    while (true) {
         displayMenu();
         cin >> choice;
 
         switch (choice) {
-            case 1:
-                loadFiles();
+            case 1: {
+                string filename1, filename2;
+                cout << "Enter the filename for Document 1: ";
+                cin >> filename1;
+                cout << "Enter the filename for Document 2: ";
+                cin >> filename2;
+                loadDocumentFromFile(doc1, doc2, filename1, filename2);
                 break;
-            case 2:
-                enterStrings();
+            }
+            case 2: {
+                string inputString1, inputString2;
+                cin.ignore(); // To ignore the leftover newline from previous input
+                cout << "Enter the text for Document 1: ";
+                getline(cin, inputString1);
+                cout << "Enter the text for Document 2: ";
+                getline(cin, inputString2);
+                loadDocumentFromString(doc1, doc2, inputString1, inputString2);
                 break;
-            case 3:
-                demoOption();
+            }
+            case 3: {
+                showSimilarity(doc1, doc2);
                 break;
-            case 4:
-                cout << "Exiting application. Goodbye!\n";
+            }
+            case 4: {
+                string word;
+                cout << "Enter a word to add to Document 1: ";
+                cin >> word;
+                doc1.add(word);
+                cout << "Word added to Document 1: ";
+                doc1.display();
                 break;
+            }
+            case 5: {
+                string word;
+                cout << "Enter a word to remove from Document 1: ";
+                cin >> word;
+                doc1.remove(word);
+                cout << "Word removed from Document 1: ";
+                doc1.display();
+                break;
+            }
+            case 6: {
+                showUnion(doc1, doc2);
+                break;
+            }
+            case 7: {
+                showIntersection(doc1, doc2);
+                break;
+            }
+            case 8:
+                cout << "Exiting the program..." << endl;
+                return 0;
             default:
-                cout << "Invalid choice. Please try again.\n";
+                cout << "Invalid option. Please try again." << endl;
+                break;
         }
-    } while (choice != 4);
+    }
 
     return 0;
 }
