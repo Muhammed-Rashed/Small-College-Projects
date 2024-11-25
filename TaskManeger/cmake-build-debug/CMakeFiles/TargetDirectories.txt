@@ -1,0 +1,3 @@
+C:/Users/moham/Downloads/Small-College-Projects/Small-College-Projects/TaskManeger/cmake-build-debug/CMakeFiles/TaskManeger.dir
+C:/Users/moham/Downloads/Small-College-Projects/Small-College-Projects/TaskManeger/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/moham/Downloads/Small-College-Projects/Small-College-Projects/TaskManeger/cmake-build-debug/CMakeFiles/rebuild_cache.dir
